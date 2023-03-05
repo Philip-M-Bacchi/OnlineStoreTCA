@@ -5,8 +5,8 @@
 //  Created by Pedro Rojas on 20/08/22.
 //
 
-import Foundation
 import ComposableArchitecture
+import Foundation
 
 struct AddToCartDomain {
     struct State: Equatable {

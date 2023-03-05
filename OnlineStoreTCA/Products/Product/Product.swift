@@ -5,8 +5,8 @@
 //  Created by Pedro Rojas on 17/08/22.
 //
 
-import Foundation
 import ComposableArchitecture
+import Foundation
 
 struct Product: Equatable, Identifiable {
     let id: Int
@@ -18,6 +18,8 @@ struct Product: Equatable, Identifiable {
 
     // Add rating later...
 }
+
+// MARK: Decodable
 
 extension Product: Decodable {
     private enum ProductKeys: String, CodingKey {

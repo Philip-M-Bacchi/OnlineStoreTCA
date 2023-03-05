@@ -5,8 +5,8 @@
 //  Created by Pedro Rojas on 20/08/22.
 //
 
-import SwiftUI
 import ComposableArchitecture
+import SwiftUI
 
 struct AddToCartButton: View {
     let store: Store<AddToCartDomain.State, AddToCartDomain.Action>

@@ -5,8 +5,8 @@
 //  Created by Pedro Rojas on 25/08/22.
 //
 
-import SwiftUI
 import ComposableArchitecture
+import SwiftUI
 
 struct ProfileView: View {
     let store: Store<ProfileDomain.State, ProfileDomain.Action>
@@ -18,8 +18,8 @@ struct ProfileView: View {
                     Form {
                         Section {
                             Text(viewStore.profile.firstName.capitalized)
-                            +
-                            Text(" \(viewStore.profile.lastName.capitalized)")
+                                +
+                                Text(" \(viewStore.profile.lastName.capitalized)")
                         } header: {
                             Text("Full name")
                         }

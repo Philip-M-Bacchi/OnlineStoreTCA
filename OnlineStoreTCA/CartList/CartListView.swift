@@ -5,8 +5,8 @@
 //  Created by Pedro Rojas on 18/08/22.
 //
 
-import SwiftUI
 import ComposableArchitecture
+import SwiftUI
 
 struct CartListView: View {
     let store: Store<CartListDomain.State, CartListDomain.Action>

@@ -5,8 +5,8 @@
 //  Created by Pedro Rojas on 22/08/22.
 //
 
-import SwiftUI
 import ComposableArchitecture
+import SwiftUI
 
 struct CartCell: View {
     let store: Store<CartItemDomain.State, CartItemDomain.Action>
@@ -21,9 +21,9 @@ struct CartCell: View {
                         )
                     ) {
                         $0
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 100, height: 100)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 100, height: 100)
                     } placeholder: {
                         ProgressView()
                             .frame(width: 100, height: 100)
@@ -43,8 +43,8 @@ struct CartCell: View {
                 ZStack {
                     Group {
                         Text("Quantity: ")
-                        +
-                        Text("\(viewStore.cartItem.quantity)")
+                            +
+                            Text("\(viewStore.cartItem.quantity)")
                             .fontWeight(.bold)
                     }
                     .font(.custom("AmericanTypewriter", size: 25))
@@ -53,7 +53,7 @@ struct CartCell: View {
                         Button {
                             viewStore.send(
                                 .deleteCartItem(
-                                product: viewStore.cartItem.product
+                                    product: viewStore.cartItem.product
                                 )
                             )
                         } label: {

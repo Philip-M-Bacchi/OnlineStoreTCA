@@ -5,8 +5,8 @@
 //  Created by Pedro Rojas on 24/08/22.
 //
 
-import Foundation
 import ComposableArchitecture
+import Foundation
 
 struct RootDomain {
     struct State: Equatable {
@@ -69,7 +69,7 @@ struct RootDomain {
             switch action {
             case .productList:
                 return .none
-            case .tabSelected(let tab):
+            case let .tabSelected(tab):
                 state.selectedTab = tab
                 return .none
             case .profile:

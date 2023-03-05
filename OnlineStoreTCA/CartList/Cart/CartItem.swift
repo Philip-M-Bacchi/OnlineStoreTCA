@@ -31,6 +31,8 @@ extension CartItem {
     }
 }
 
+// MARK: Encodable
+
 extension CartItem: Encodable {
     private enum CartItemsKey: String, CodingKey {
         case productId
@@ -39,7 +41,7 @@ extension CartItem: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CartItemsKey.self)
-        try container.encode(product.id, forKey: .productId)
-        try container.encode(quantity, forKey: .quantity)
+        try container.encode(self.product.id, forKey: .productId)
+        try container.encode(self.quantity, forKey: .quantity)
     }
 }

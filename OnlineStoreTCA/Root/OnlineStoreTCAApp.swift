@@ -5,8 +5,8 @@
 //  Created by Pedro Rojas on 04/08/22.
 //
 
-import SwiftUI
 import ComposableArchitecture
+import SwiftUI
 
 @main
 struct OnlineStoreTCAApp: App {

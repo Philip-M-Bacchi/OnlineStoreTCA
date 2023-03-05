@@ -16,10 +16,10 @@ struct ErrorView: View {
             Text(":(")
                 .font(.custom("AmericanTypewriter", size: 50))
             Text("")
-            Text(message)
+            Text(self.message)
                 .font(.custom("AmericanTypewriter", size: 25))
             Button {
-                retryAction()
+                self.retryAction()
             } label: {
                 Text("Retry")
                     .font(.custom("AmericanTypewriter", size: 25))

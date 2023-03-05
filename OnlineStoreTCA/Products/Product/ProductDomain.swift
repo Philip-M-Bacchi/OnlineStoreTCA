@@ -5,8 +5,8 @@
 //  Created by Pedro Rojas on 21/08/22.
 //
 
-import Foundation
 import ComposableArchitecture
+import Foundation
 
 struct ProductDomain {
     struct State: Equatable, Identifiable {
@@ -15,7 +15,7 @@ struct ProductDomain {
         var addToCartState = AddToCartDomain.State()
 
         var count: Int {
-            addToCartState.count
+            self.addToCartState.count
         }
     }
 

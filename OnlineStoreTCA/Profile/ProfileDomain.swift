@@ -5,15 +5,15 @@
 //  Created by Pedro Rojas on 25/08/22.
 //
 
-import Foundation
 import ComposableArchitecture
+import Foundation
 
 struct ProfileDomain {
     struct State: Equatable {
         var profile: UserProfile = .default
         fileprivate var dataState = DataState.notStarted
         var isLoading: Bool {
-            dataState == .loading
+            self.dataState == .loading
         }
     }
 
@@ -32,7 +32,7 @@ struct ProfileDomain {
         var fetchUserProfile: () async throws -> UserProfile
     }
 
-    static let reducer = Reducer <
+    static let reducer = Reducer<
         State, Action, Environment
     > { state, action, environment in
         switch action {
@@ -47,11 +47,11 @@ struct ProfileDomain {
                     TaskResult { try await environment.fetchUserProfile() }
                 )
             }
-        case .fetchUserProfileResponse(.success(let profile)):
+        case let .fetchUserProfileResponse(.success(profile)):
             state.dataState = .complete
             state.profile = profile
             return .none
-        case .fetchUserProfileResponse(.failure(let error)):
+        case let .fetchUserProfileResponse(.failure(error)):
             state.dataState = .complete
             print("Error: \(error)")
             return .none

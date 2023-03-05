@@ -20,14 +20,14 @@ class CartListDomainTest: XCTestCase {
         let cartItems: IdentifiedArrayOf<CartItemDomain.State> = [
             .init(
                 id: cartItemId1,
-                cartItem: CartItem.init(
+                cartItem: CartItem(
                     product: Product.sample[0],
                     quantity: itemQuantity
                 )
             ),
             .init(
                 id: cartItemId2,
-                cartItem: CartItem.init(
+                cartItem: CartItem(
                     product: Product.sample[1],
                     quantity: itemQuantity
                 )
@@ -46,7 +46,7 @@ class CartListDomainTest: XCTestCase {
             $0.cartItems = [
                 .init(
                     id: cartItemId2,
-                    cartItem: CartItem.init(
+                    cartItem: CartItem(
                         product: Product.sample[1],
                         quantity: itemQuantity
                     )
@@ -68,14 +68,14 @@ class CartListDomainTest: XCTestCase {
         let cartItems: IdentifiedArrayOf<CartItemDomain.State> = [
             .init(
                 id: cartItemId1,
-                cartItem: CartItem.init(
+                cartItem: CartItem(
                     product: Product.sample[0],
                     quantity: itemQuantity
                 )
             ),
             .init(
                 id: cartItemId2,
-                cartItem: CartItem.init(
+                cartItem: CartItem(
                     product: Product.sample[1],
                     quantity: itemQuantity
                 )
@@ -94,7 +94,7 @@ class CartListDomainTest: XCTestCase {
             $0.cartItems = [
                 .init(
                     id: cartItemId2,
-                    cartItem: CartItem.init(
+                    cartItem: CartItem(
                         product: Product.sample[1],
                         quantity: itemQuantity
                     )
@@ -126,14 +126,14 @@ class CartListDomainTest: XCTestCase {
         let cartItems: IdentifiedArrayOf<CartItemDomain.State> = [
             .init(
                 id: cartItemId1,
-                cartItem: CartItem.init(
+                cartItem: CartItem(
                     product: Product.sample[0],
                     quantity: itemQuantity
                 )
             ),
             .init(
                 id: cartItemId2,
-                cartItem: CartItem.init(
+                cartItem: CartItem(
                     product: Product.sample[1],
                     quantity: itemQuantity
                 )
@@ -172,14 +172,14 @@ class CartListDomainTest: XCTestCase {
         let cartItems: IdentifiedArrayOf<CartItemDomain.State> = [
             .init(
                 id: cartItemId1,
-                cartItem: CartItem.init(
+                cartItem: CartItem(
                     product: Product.sample[0],
                     quantity: itemQuantity
                 )
             ),
             .init(
                 id: cartItemId2,
-                cartItem: CartItem.init(
+                cartItem: CartItem(
                     product: Product.sample[1],
                     quantity: itemQuantity
                 )

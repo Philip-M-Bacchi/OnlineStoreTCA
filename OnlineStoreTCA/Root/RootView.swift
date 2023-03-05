@@ -5,8 +5,8 @@
 //  Created by Pedro Rojas on 24/08/22.
 //
 
-import SwiftUI
 import ComposableArchitecture
+import SwiftUI
 
 struct RootView: View {
     let store: Store<RootDomain.State, RootDomain.Action>

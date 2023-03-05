@@ -5,8 +5,8 @@
 //  Created by Pedro Rojas on 17/08/22.
 //
 
-import Foundation
 import ComposableArchitecture
+import Foundation
 
 struct ProductListDomain {
     struct State: Equatable {
@@ -16,11 +16,11 @@ struct ProductListDomain {
         var productListState: IdentifiedArrayOf<ProductDomain.State> = []
 
         var shouldShowError: Bool {
-            dataLoadingStatus == .error
+            self.dataLoadingStatus == .error
         }
 
         var isLoading: Bool {
-            dataLoadingStatus == .loading
+            self.dataLoadingStatus == .loading
         }
     }
 
@@ -72,7 +72,7 @@ struct ProductListDomain {
                         TaskResult { try await environment.fetchProducts() }
                     )
                 }
-            case .fetchProductsResponse(.success(let products)):
+            case let .fetchProductsResponse(.success(products)):
                 state.dataLoadingStatus = .success
                 state.productListState = IdentifiedArrayOf(
                     uniqueElements: products.map {
@@ -83,12 +83,12 @@ struct ProductListDomain {
                     }
                 )
                 return .none
-            case .fetchProductsResponse(.failure(let error)):
+            case let .fetchProductsResponse(.failure(error)):
                 state.dataLoadingStatus = .error
                 print(error)
                 print("Error getting products, try again later.")
                 return .none
-            case .cart(let action):
+            case let .cart(action):
                 switch action {
                 case .didPressCloseButton:
                     return closeCart(state: &state)
@@ -98,9 +98,9 @@ struct ProductListDomain {
                     return .task {
                         .closeCart
                     }
-                case .cartItem(_, let action):
+                case let .cartItem(_, action):
                     switch action {
-                    case .deleteCartItem(let product):
+                    case let .deleteCartItem(product):
                         return .task {
                             .resetProduct(product: product)
                         }
@@ -110,39 +110,38 @@ struct ProductListDomain {
                 }
             case .closeCart:
                 return closeCart(state: &state)
-            case .resetProduct(let product):
+            case let .resetProduct(product):
 
                 guard let index = state.productListState.firstIndex(
                     where: { $0.product.id == product.id }
-                )
-                else { return .none }
+                ) else { return .none }
                 let productStateId = state.productListState[index].id
 
                 state.productListState[id: productStateId]?.addToCartState.count = 0
                 return .none
-            case .setCartView(let isPresented):
+            case let .setCartView(isPresented):
                 state.shouldOpenCart = isPresented
                 state.cartState = isPresented
-                ? CartListDomain.State(
-                    cartItems: IdentifiedArrayOf(
-                        uniqueElements: state
-                            .productListState
-                            .compactMap { state in
-                                state.count > 0
-                                ? CartItemDomain.State(
-                                    id: environment.uuid(),
-                                    cartItem: CartItem(
-                                        product: state.product,
-                                        quantity: state.count
-                                    )
-                                )
-                                : nil
-                            }
+                    ? CartListDomain.State(
+                        cartItems: IdentifiedArrayOf(
+                            uniqueElements: state
+                                .productListState
+                                .compactMap { state in
+                                    state.count > 0
+                                        ? CartItemDomain.State(
+                                            id: environment.uuid(),
+                                            cartItem: CartItem(
+                                                product: state.product,
+                                                quantity: state.count
+                                            )
+                                        )
+                                        : nil
+                                }
+                        )
                     )
-                )
-                : nil
+                    : nil
                 return .none
-            case .product(let id, let action):
+            case let .product(id, action):
                 return .none
             }
         }
@@ -161,7 +160,8 @@ struct ProductListDomain {
         state: inout State
     ) {
         for id in state.productListState.map(\.id)
-        where state.productListState[id: id]?.count != 0 {
+            where state.productListState[id: id]?.count != 0
+        {
             state.productListState[id: id]?.addToCartState.count = 0
         }
     }

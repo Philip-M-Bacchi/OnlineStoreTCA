@@ -5,8 +5,8 @@
 //  Created by Pedro Rojas on 18/08/22.
 //
 
-import Foundation
 import ComposableArchitecture
+import Foundation
 
 struct CartListDomain {
     struct State: Equatable {
@@ -28,7 +28,7 @@ struct CartListDomain {
         }
 
         var isRequestInProcess: Bool {
-            dataLoadingStatus == .loading
+            self.dataLoadingStatus == .loading
         }
     }
 
@@ -61,7 +61,7 @@ struct CartListDomain {
             switch action {
             case .didPressCloseButton:
                 return .none
-            case .didReceivePurchaseResponse(.success(let message)):
+            case let .didReceivePurchaseResponse(.success(message)):
                 state.dataLoadingStatus = .success
                 state.successAlert = AlertState(
                     title: TextState("Thank you!"),
@@ -84,10 +84,10 @@ struct CartListDomain {
                 )
                 return .none
             case .getTotalPrice:
-                let items = state.cartItems.map { $0.cartItem }
-                state.totalPrice = items.reduce(0.0, {
+                let items = state.cartItems.map(\.cartItem)
+                state.totalPrice = items.reduce(0.0) {
                     $0 + ($1.product.price * Double($1.quantity))
-                })
+                }
                 return verifyPayButtonVisibility(state: &state)
             case .didPressPayButton:
                 state.confirmationAlert = AlertState(
@@ -96,7 +96,8 @@ struct CartListDomain {
                     buttons: [
                         .default(
                             TextState("Pay \(state.totalPriceString)"),
-                            action: .send(.didConfirmPurchase)),
+                            action: .send(.didConfirmPurchase)
+                        ),
                         .cancel(TextState("Cancel"), action: .send(.didCancelConfirmation))
                     ]
                 )
@@ -112,20 +113,20 @@ struct CartListDomain {
                 return .none
             case .didConfirmPurchase:
                 state.dataLoadingStatus = .loading
-                let items = state.cartItems.map { $0.cartItem }
+                let items = state.cartItems.map(\.cartItem)
                 return .task {
                     await .didReceivePurchaseResponse(
                         TaskResult { try await environment.sendOrder(items) }
                     )
                 }
-            case .cartItem(let id, let action):
+            case let .cartItem(id, action):
                 switch action {
                 case .deleteCartItem:
                     return .task {
                         .deleteCartItem(id: id)
                     }
                 }
-            case .deleteCartItem(let id):
+            case let .deleteCartItem(id):
                 state.cartItems.remove(id: id)
                 return Effect(value: .getTotalPrice)
             }

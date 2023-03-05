@@ -14,6 +14,8 @@ struct UserProfile: Equatable {
     let lastName: String
 }
 
+// MARK: Decodable
+
 extension UserProfile: Decodable {
     private enum ProfileKeys: String, CodingKey {
         case id

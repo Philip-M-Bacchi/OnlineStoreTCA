@@ -5,8 +5,8 @@
 //  Created by Pedro Rojas on 20/08/22.
 //
 
-import SwiftUI
 import ComposableArchitecture
+import SwiftUI
 
 struct ProductCell: View {
     let store: Store<ProductDomain.State, ProductDomain.Action>

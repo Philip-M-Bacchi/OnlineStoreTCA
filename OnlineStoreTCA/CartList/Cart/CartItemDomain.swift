@@ -5,8 +5,8 @@
 //  Created by Pedro Rojas on 22/08/22.
 //
 
-import Foundation
 import ComposableArchitecture
+import Foundation
 
 struct CartItemDomain {
     struct State: Equatable, Identifiable {
