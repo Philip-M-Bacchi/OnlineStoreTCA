@@ -69,9 +69,11 @@ struct RootDomain {
             switch action {
             case .productList:
                 return .none
+
             case let .tabSelected(tab):
                 state.selectedTab = tab
                 return .none
+
             case .profile:
                 return .none
             }

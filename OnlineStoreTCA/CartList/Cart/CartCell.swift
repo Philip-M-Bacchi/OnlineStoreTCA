@@ -77,7 +77,7 @@ struct CartCell_Previews: PreviewProvider {
             store: Store(
                 initialState: CartItemDomain.State(
                     id: UUID(),
-                    cartItem: CartItem.sample.first!
+                    cartItem: CartItem.sample.staticFirst
                 ),
                 reducer: CartItemDomain.reducer,
                 environment: CartItemDomain.Environment()

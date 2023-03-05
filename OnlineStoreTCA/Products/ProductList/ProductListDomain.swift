@@ -72,6 +72,7 @@ struct ProductListDomain {
                         TaskResult { try await environment.fetchProducts() }
                     )
                 }
+
             case let .fetchProductsResponse(.success(products)):
                 state.dataLoadingStatus = .success
                 state.productListState = IdentifiedArrayOf(
@@ -83,21 +84,25 @@ struct ProductListDomain {
                     }
                 )
                 return .none
+
             case let .fetchProductsResponse(.failure(error)):
                 state.dataLoadingStatus = .error
                 print(error)
                 print("Error getting products, try again later.")
                 return .none
+
             case let .cart(action):
                 switch action {
                 case .didPressCloseButton:
                     return closeCart(state: &state)
+
                 case .dismissSuccessAlert:
                     resetProductsToZero(state: &state)
 
                     return .task {
                         .closeCart
                     }
+
                 case let .cartItem(_, action):
                     switch action {
                     case let .deleteCartItem(product):
@@ -105,11 +110,14 @@ struct ProductListDomain {
                             .resetProduct(product: product)
                         }
                     }
+
                 default:
                     return .none
                 }
+
             case .closeCart:
                 return closeCart(state: &state)
+
             case let .resetProduct(product):
 
                 guard let index = state.productListState.firstIndex(
@@ -119,6 +127,7 @@ struct ProductListDomain {
 
                 state.productListState[id: productStateId]?.addToCartState.count = 0
                 return .none
+
             case let .setCartView(isPresented):
                 state.shouldOpenCart = isPresented
                 state.cartState = isPresented
@@ -141,6 +150,7 @@ struct ProductListDomain {
                     )
                     : nil
                 return .none
+
             case let .product(id, action):
                 return .none
             }

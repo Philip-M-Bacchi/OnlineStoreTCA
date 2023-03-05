@@ -87,7 +87,7 @@
  --guardelse same-line
 
  ### Others
- --commas inline
+# --commas inline
  --ifdef noindent
  --indent 4
  --linebreaks lf ##default

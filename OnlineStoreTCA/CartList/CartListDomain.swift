@@ -61,6 +61,7 @@ struct CartListDomain {
             switch action {
             case .didPressCloseButton:
                 return .none
+
             case let .didReceivePurchaseResponse(.success(message)):
                 state.dataLoadingStatus = .success
                 state.successAlert = AlertState(
@@ -72,6 +73,7 @@ struct CartListDomain {
                 )
                 print("Success: \(message)")
                 return .none
+
             case .didReceivePurchaseResponse(.failure):
                 state.dataLoadingStatus = .error
                 print("Unable to send order")
@@ -83,12 +85,14 @@ struct CartListDomain {
                     ]
                 )
                 return .none
+
             case .getTotalPrice:
                 let items = state.cartItems.map(\.cartItem)
                 state.totalPrice = items.reduce(0.0) {
                     $0 + ($1.product.price * Double($1.quantity))
                 }
                 return verifyPayButtonVisibility(state: &state)
+
             case .didPressPayButton:
                 state.confirmationAlert = AlertState(
                     title: TextState("Confirm your purchase"),
@@ -102,15 +106,19 @@ struct CartListDomain {
                     ]
                 )
                 return .none
+
             case .didCancelConfirmation:
                 state.confirmationAlert = nil
                 return .none
+
             case .dismissSuccessAlert:
                 state.successAlert = nil
                 return .none
+
             case .dismissErrorAlert:
                 state.errorAlert = nil
                 return .none
+
             case .didConfirmPurchase:
                 state.dataLoadingStatus = .loading
                 let items = state.cartItems.map(\.cartItem)
@@ -119,6 +127,7 @@ struct CartListDomain {
                         TaskResult { try await environment.sendOrder(items) }
                     )
                 }
+
             case let .cartItem(id, action):
                 switch action {
                 case .deleteCartItem:
@@ -126,6 +135,7 @@ struct CartListDomain {
                         .deleteCartItem(id: id)
                     }
                 }
+
             case let .deleteCartItem(id):
                 state.cartItems.remove(id: id)
                 return Effect(value: .getTotalPrice)

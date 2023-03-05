@@ -47,10 +47,12 @@ struct ProfileDomain {
                     TaskResult { try await environment.fetchUserProfile() }
                 )
             }
+
         case let .fetchUserProfileResponse(.success(profile)):
             state.dataState = .complete
             state.profile = profile
             return .none
+
         case let .fetchUserProfileResponse(.failure(error)):
             state.dataState = .complete
             print("Error: \(error)")

@@ -25,6 +25,7 @@ struct AddToCartDomain {
         case .didTapPlusButton:
             state.count += 1
             return .none
+
         case .didTapMinusButton:
             state.count -= 1
             return .none

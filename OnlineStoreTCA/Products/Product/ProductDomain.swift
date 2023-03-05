@@ -40,6 +40,7 @@ struct ProductDomain {
             switch action {
             case .addToCart(.didTapPlusButton):
                 return .none
+
             case .addToCart(.didTapMinusButton):
                 state.addToCartState.count = max(0, state.addToCartState.count)
                 return .none

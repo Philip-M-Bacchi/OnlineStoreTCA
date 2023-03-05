@@ -14,6 +14,7 @@ import XCTest
 class ProductListDomainTest: XCTestCase {
 
     override func setUp() async throws {
+        try await super.setUp()
         UUID.uuIdTestCounter = 0
     }
 
@@ -49,8 +50,8 @@ class ProductListDomainTest: XCTestCase {
             )
         )
 
-        let productId1 = UUID(uuidString: "00000000-0000-0000-0000-000000000000")!
-        let productId2 = UUID(uuidString: "00000000-0000-0000-0000-000000000001")!
+        let productId1 = UUID(staticUUID: "00000000-0000-0000-0000-000000000000")
+        let productId2 = UUID(staticUUID: "00000000-0000-0000-0000-000000000001")
 
         let identifiedArray = IdentifiedArrayOf(
             uniqueElements: [
@@ -99,7 +100,6 @@ class ProductListDomainTest: XCTestCase {
         }
     }
 
-    // swiftlint:disable:next function_body_length
     func testResetProductsToZeroAcferPayingOrder() async {
         let products: [Product] = [
             .init(
@@ -120,8 +120,8 @@ class ProductListDomainTest: XCTestCase {
             )
         ]
 
-        let id1 = UUID(uuidString: "00000000-0000-0000-0000-000000000000")!
-        let id2 = UUID(uuidString: "00000000-0000-0000-0000-000000000001")!
+        let id1 = UUID(staticUUID: "00000000-0000-0000-0000-000000000000")
+        let id2 = UUID(staticUUID: "00000000-0000-0000-0000-000000000001")
 
         let identifiedProducts = IdentifiedArrayOf(
             uniqueElements: [
@@ -174,7 +174,7 @@ class ProductListDomainTest: XCTestCase {
                     CartItemDomain.State(
                         id: id1,
                         cartItem: CartItem(
-                            product: products.first!,
+                            product: products.staticFirst,
                             quantity: 2
                         )
                     )
@@ -197,7 +197,6 @@ class ProductListDomainTest: XCTestCase {
         }
     }
 
-    // swiftlint:disable:next function_body_length
     func testItemRemovedFromCart() async {
         let products: [Product] = [
             .init(
@@ -218,8 +217,8 @@ class ProductListDomainTest: XCTestCase {
             )
         ]
 
-        let id1 = UUID(uuidString: "00000000-0000-0000-0000-000000000000")!
-        let id2 = UUID(uuidString: "00000000-0000-0000-0000-000000000001")!
+        let id1 = UUID(staticUUID: "00000000-0000-0000-0000-000000000000")
+        let id2 = UUID(staticUUID: "00000000-0000-0000-0000-000000000001")
         let numberOfItems = 2
 
         let identifiedProducts = IdentifiedArrayOf(
@@ -249,14 +248,13 @@ class ProductListDomainTest: XCTestCase {
                 uuid: { UUID.newUUIDForTest }
             )
         )
-
         let expectedCartState = CartListDomain.State(
             cartItems: IdentifiedArrayOf(
                 uniqueElements: [
                     CartItemDomain.State(
                         id: id1,
                         cartItem: CartItem(
-                            product: products.first!,
+                            product: products.staticFirst,
                             quantity: numberOfItems
                         )
                     )
@@ -298,6 +296,6 @@ extension UUID {
         defer {
             uuIdTestCounter += 1
         }
-        return UUID(uuidString: "00000000-0000-0000-0000-\(String(format: "%012x", uuIdTestCounter))")!
+        return UUID(staticUUID: "00000000-0000-0000-0000-\(String(format: "%012x", uuIdTestCounter))")
     }
 }

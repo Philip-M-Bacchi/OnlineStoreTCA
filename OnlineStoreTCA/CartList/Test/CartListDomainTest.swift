@@ -13,8 +13,8 @@ import XCTest
 @MainActor
 class CartListDomainTest: XCTestCase {
     func testRemoveItemFromCart() async {
-        let cartItemId1 = UUID(uuidString: "00000000-0000-0000-0000-000000000000")!
-        let cartItemId2 = UUID(uuidString: "00000000-0000-0000-0000-000000000001")!
+        let cartItemId1 = UUID(staticUUID: "00000000-0000-0000-0000-000000000000")
+        let cartItemId2 = UUID(staticUUID: "00000000-0000-0000-0000-000000000001")
         let itemQuantity = 2
 
         let cartItems: IdentifiedArrayOf<CartItemDomain.State> = [
@@ -61,8 +61,8 @@ class CartListDomainTest: XCTestCase {
     }
 
     func testRemoveAllItemsFromCart() async {
-        let cartItemId1 = UUID(uuidString: "00000000-0000-0000-0000-000000000000")!
-        let cartItemId2 = UUID(uuidString: "00000000-0000-0000-0000-000000000001")!
+        let cartItemId1 = UUID(staticUUID: "00000000-0000-0000-0000-000000000000")
+        let cartItemId2 = UUID(staticUUID: "00000000-0000-0000-0000-000000000001")
         let itemQuantity = 2
 
         let cartItems: IdentifiedArrayOf<CartItemDomain.State> = [
@@ -119,8 +119,8 @@ class CartListDomainTest: XCTestCase {
     }
 
     func testSendOrderSuccessfully() async {
-        let cartItemId1 = UUID(uuidString: "00000000-0000-0000-0000-000000000000")!
-        let cartItemId2 = UUID(uuidString: "00000000-0000-0000-0000-000000000001")!
+        let cartItemId1 = UUID(staticUUID: "00000000-0000-0000-0000-000000000000")
+        let cartItemId2 = UUID(staticUUID: "00000000-0000-0000-0000-000000000001")
         let itemQuantity = 2
 
         let cartItems: IdentifiedArrayOf<CartItemDomain.State> = [
@@ -165,8 +165,8 @@ class CartListDomainTest: XCTestCase {
     }
 
     func testSendOrderWithError() async {
-        let cartItemId1 = UUID(uuidString: "00000000-0000-0000-0000-000000000000")!
-        let cartItemId2 = UUID(uuidString: "00000000-0000-0000-0000-000000000001")!
+        let cartItemId1 = UUID(staticUUID: "00000000-0000-0000-0000-000000000000")
+        let cartItemId2 = UUID(staticUUID: "00000000-0000-0000-0000-000000000001")
         let itemQuantity = 2
 
         let cartItems: IdentifiedArrayOf<CartItemDomain.State> = [

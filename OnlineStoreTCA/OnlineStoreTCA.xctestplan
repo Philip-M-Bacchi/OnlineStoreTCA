@@ -1,0 +1,29 @@
+{
+  "configurations" : [
+    {
+      "id" : "FEDC3603-AC4F-4F97-81FE-33885B8F544F",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:OnlineStoreTCA.xcodeproj",
+      "identifier" : "B5A5CFB0289C257900AC3E5E",
+      "name" : "OnlineStoreTCA"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:OnlineStoreTCA.xcodeproj",
+        "identifier" : "B5389D1128B9AAA3002BF611",
+        "name" : "OnlineStoreTCATests"
+      }
+    }
+  ],
+  "version" : 1
+}

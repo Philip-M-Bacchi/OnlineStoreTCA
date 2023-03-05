@@ -1,4 +1,5 @@
 disabled_rules:
+  - empty_count
   - notification_center_detachment
   - opening_brace
   - todo
@@ -14,7 +15,6 @@ opt_in_rules:
   - convenience_type
   - discouraged_object_literal
   - empty_collection_literal
-  - empty_count
   - empty_string
   - empty_xctest_method
   - enum_case_associated_values_count
@@ -67,8 +67,8 @@ private_over_fileprivate:
   validate_extensions: true
   severity: error
 
-empty_count:
-  severity: warning
+#empty_count:
+#  severity: warning
 
 force_unwrapping:
   severity: warning
