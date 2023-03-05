@@ -10,7 +10,7 @@ import ComposableArchitecture
 
 struct ProfileView: View {
     let store: Store<ProfileDomain.State, ProfileDomain.Action>
-    
+
     var body: some View {
         WithViewStore(self.store) { viewStore in
             NavigationView {
@@ -23,14 +23,14 @@ struct ProfileView: View {
                         } header: {
                             Text("Full name")
                         }
-                        
+
                         Section {
                             Text(viewStore.profile.email)
                         } header: {
                             Text("Email")
                         }
                     }
-                    
+
                     if viewStore.isLoading {
                         ProgressView()
                     }

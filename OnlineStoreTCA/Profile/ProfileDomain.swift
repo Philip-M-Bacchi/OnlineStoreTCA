@@ -16,22 +16,22 @@ struct ProfileDomain {
             dataState == .loading
         }
     }
-    
+
     fileprivate enum DataState {
         case notStarted
         case loading
         case complete
     }
-    
+
     enum Action: Equatable {
         case fetchUserProfile
         case fetchUserProfileResponse(TaskResult<UserProfile>)
     }
-    
+
     struct Environment {
         var fetchUserProfile: () async throws -> UserProfile
     }
-    
+
     static let reducer = Reducer <
         State, Action, Environment
     > { state, action, environment in
@@ -40,7 +40,7 @@ struct ProfileDomain {
             if state.dataState == .complete || state.dataState == .loading {
                 return .none
             }
-            
+
             state.dataState = .loading
             return .task {
                 await .fetchUserProfileResponse(

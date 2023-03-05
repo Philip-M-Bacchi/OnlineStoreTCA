@@ -26,7 +26,7 @@ extension CartItem {
             .init(
                 product: Product.sample[2],
                 quantity: 1
-            ),
+            )
         ]
     }
 }
@@ -36,7 +36,7 @@ extension CartItem: Encodable {
         case productId
         case quantity
     }
-    
+
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CartItemsKey.self)
         try container.encode(product.id, forKey: .productId)

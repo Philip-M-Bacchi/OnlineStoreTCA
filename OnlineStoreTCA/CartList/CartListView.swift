@@ -10,7 +10,7 @@ import ComposableArchitecture
 
 struct CartListView: View {
     let store: Store<CartListDomain.State, CartListDomain.Action>
-    
+
     var body: some View {
         WithViewStore(self.store) { viewStore in
             ZStack {
@@ -40,10 +40,10 @@ struct CartListView: View {
                                         Text("Pay \(viewStore.totalPriceString)")
                                             .font(.custom("AmericanTypewriter", size: 30))
                                             .foregroundColor(.white)
-                                        
+
                                         Spacer()
                                     }
-                                    
+
                                 }
                                 .frame(maxWidth: .infinity, minHeight: 60)
                                 .background(.blue)

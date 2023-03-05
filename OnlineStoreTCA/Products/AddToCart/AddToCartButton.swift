@@ -10,7 +10,7 @@ import ComposableArchitecture
 
 struct AddToCartButton: View {
     let store: Store<AddToCartDomain.State, AddToCartDomain.Action>
-    
+
     var body: some View {
         WithViewStore(self.store) { viewStore in
             if viewStore.count > 0 {

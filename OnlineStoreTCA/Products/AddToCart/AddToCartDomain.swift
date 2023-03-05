@@ -12,17 +12,15 @@ struct AddToCartDomain {
     struct State: Equatable {
         var count = 0
     }
-    
+
     enum Action: Equatable {
         case didTapPlusButton
         case didTapMinusButton
     }
-    
+
     struct Environment {}
-    
-    static let reducer = Reducer<
-        State, Action, Environment
-    > { state, action, environment in
+
+    static let reducer = Reducer<State, Action, Environment> { state, action, _ in
         switch action {
         case .didTapPlusButton:
             state.count += 1

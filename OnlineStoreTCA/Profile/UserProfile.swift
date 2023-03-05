@@ -22,12 +22,12 @@ extension UserProfile: Decodable {
         case firstname
         case lastname
     }
-    
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: ProfileKeys.self)
         self.id = try container.decode(Int.self, forKey: .id)
         self.email = try container.decode(String.self, forKey: .email)
-        
+
         let nameContainer = try container.nestedContainer(keyedBy: ProfileKeys.self, forKey: .name)
         self.firstName = try nameContainer.decode(String.self, forKey: .firstname)
         self.lastName = try nameContainer.decode(String.self, forKey: .lastname)
@@ -43,7 +43,7 @@ extension UserProfile {
             lastName: "Rojas"
         )
     }
-    
+
     static var `default`: UserProfile {
         .init(
             id: 0,

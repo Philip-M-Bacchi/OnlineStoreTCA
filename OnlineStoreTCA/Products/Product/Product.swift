@@ -15,7 +15,7 @@ struct Product: Equatable, Identifiable {
     let description: String
     let category: String // Update to enum
     let imageString: String
-    
+
     // Add rating later...
 }
 
@@ -28,7 +28,7 @@ extension Product: Decodable {
         case category
         case image
     }
-    
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: ProductKeys.self)
         self.id = try container.decode(Int.self, forKey: .id)
@@ -41,6 +41,7 @@ extension Product: Decodable {
 }
 
 extension Product {
+    // swiftlint:disable line_length
     static var sample: [Product] {
         [
             .init(

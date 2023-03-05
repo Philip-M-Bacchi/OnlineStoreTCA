@@ -10,7 +10,7 @@ import ComposableArchitecture
 
 struct ProductCell: View {
     let store: Store<ProductDomain.State, ProductDomain.Action>
-    
+
     var body: some View {
         WithViewStore(self.store) { viewStore in
             VStack {
@@ -25,7 +25,7 @@ struct ProductCell: View {
                     ProgressView()
                         .frame(height: 300)
                 }
-                
+
                 VStack(alignment: .leading) {
                     Text(viewStore.product.title)
                     HStack {
@@ -42,8 +42,7 @@ struct ProductCell: View {
                     }
                 }
                 .font(.custom("AmericanTypewriter", size: 20))
-                
-                
+
             }
             .padding(20)
         }

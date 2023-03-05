@@ -9,8 +9,8 @@ import SwiftUI
 import ComposableArchitecture
 
 struct ProductListView: View {
-    let store: Store<ProductListDomain.State,ProductListDomain.Action>
-    
+    let store: Store<ProductListDomain.State, ProductListDomain.Action>
+
     var body: some View {
         WithViewStore(self.store) { viewStore in
             NavigationView {
@@ -23,7 +23,7 @@ struct ProductListView: View {
                             message: "Oops, we couldn't fetch product list",
                             retryAction: { viewStore.send(.fetchProducts) }
                         )
-                        
+
                     } else {
                         List {
                             ForEachStore(
@@ -66,7 +66,7 @@ struct ProductListView: View {
                         CartListView(store: $0)
                     }
                 }
-                
+
             }
         }
     }

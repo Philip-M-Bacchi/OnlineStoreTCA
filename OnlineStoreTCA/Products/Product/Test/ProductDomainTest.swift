@@ -29,12 +29,12 @@ class ProductDomainTest: XCTestCase {
             reducer: ProductDomain.reducer,
             environment: ProductDomain.Environment()
         )
-        
+
         await store.send(.addToCart(.didTapPlusButton)) {
             $0.addToCartState = AddToCartDomain.State(count: 1)
         }
     }
-    
+
     func testIncreaseProductCounterTappingPlusButtonThreeTimes() async {
         let product = Product(
             id: 1,
@@ -52,21 +52,20 @@ class ProductDomainTest: XCTestCase {
             reducer: ProductDomain.reducer,
             environment: ProductDomain.Environment()
         )
-        
+
         await store.send(.addToCart(.didTapPlusButton)) {
             $0.addToCartState = AddToCartDomain.State(count: 1)
         }
-        
+
         await store.send(.addToCart(.didTapPlusButton)) {
             $0.addToCartState = AddToCartDomain.State(count: 2)
         }
-        
+
         await store.send(.addToCart(.didTapPlusButton)) {
             $0.addToCartState = AddToCartDomain.State(count: 3)
         }
     }
-    
-    
+
     func testIncreaseProductCounterTappingMinusButtonOnce() async {
         let product = Product(
             id: 1,
@@ -84,10 +83,10 @@ class ProductDomainTest: XCTestCase {
             reducer: ProductDomain.reducer,
             environment: ProductDomain.Environment()
         )
-        
+
         await store.send(.addToCart(.didTapMinusButton))
     }
-    
+
     func testIncreaseProductCounterTappingMinusButtonThreeTimes() async {
         let product = Product(
             id: 1,
@@ -105,13 +104,13 @@ class ProductDomainTest: XCTestCase {
             reducer: ProductDomain.reducer,
             environment: ProductDomain.Environment()
         )
-        
+
         // No changes expected!
         await store.send(.addToCart(.didTapMinusButton))
         await store.send(.addToCart(.didTapMinusButton))
         await store.send(.addToCart(.didTapMinusButton))
     }
-    
+
     func testIncreaseProductCounterTappingMinusTwoTimesAndPlusOnce() async {
         let product = Product(
             id: 1,
@@ -129,15 +128,15 @@ class ProductDomainTest: XCTestCase {
             reducer: ProductDomain.reducer,
             environment: ProductDomain.Environment()
         )
-        
+
         // No changes expected!
         await store.send(.addToCart(.didTapMinusButton))
         await store.send(.addToCart(.didTapMinusButton))
-        
+
         // Change expected!
         await store.send(.addToCart(.didTapPlusButton)) {
             $0.addToCartState = AddToCartDomain.State(count: 1)
         }
     }
-    
+
 }

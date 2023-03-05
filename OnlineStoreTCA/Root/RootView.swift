@@ -10,7 +10,7 @@ import ComposableArchitecture
 
 struct RootView: View {
     let store: Store<RootDomain.State, RootDomain.Action>
-    
+
     var body: some View {
         WithViewStore(self.store) { viewStore in
             TabView(

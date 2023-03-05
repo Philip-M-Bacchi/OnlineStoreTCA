@@ -9,10 +9,10 @@ import Foundation
 import ComposableArchitecture
 
 struct APIClient {
-    var fetchProducts:  @Sendable () async throws -> [Product]
-    var sendOrder:  @Sendable ([CartItem]) async throws -> String
-    var fetchUserProfile:  @Sendable () async throws -> UserProfile
-    
+    var fetchProducts: @Sendable () async throws -> [Product]
+    var sendOrder: @Sendable ([CartItem]) async throws -> String
+    var fetchUserProfile: @Sendable () async throws -> UserProfile
+
     struct Failure: Error, Equatable {}
 }
 
@@ -32,14 +32,14 @@ extension APIClient {
         var urlRequest = URLRequest(url: URL(string: "https://fakestoreapi.com/carts")!)
         urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
         urlRequest.httpMethod = "POST"
-        
+
         let (data, response) = try await URLSession.shared.upload(for: urlRequest, from: payload)
-        
+
         guard let httpResponse = (response as? HTTPURLResponse) else {
             throw Failure()
         }
-        
-        return "Status: \(httpResponse.statusCode)"//String(data: data, encoding: .utf8) ?? "default value"
+
+        return "Status: \(httpResponse.statusCode)"// String(data: data, encoding: .utf8) ?? "default value"
     },
     fetchUserProfile: {
         let (data, _) = try await URLSession.shared

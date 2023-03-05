@@ -12,11 +12,11 @@ import XCTest
 
 @MainActor
 class ProductListDomainTest: XCTestCase {
-    
+
     override func setUp() async throws {
         UUID.uuIdTestCounter = 0
     }
-    
+
     func testFetchProductsSuccess() async {
         let products: [Product] = [
             .init(
@@ -34,9 +34,9 @@ class ProductListDomainTest: XCTestCase {
                 description: "Hi Dad!",
                 category: "Category2",
                 imageString: "image2"
-            ),
+            )
         ]
-        
+
         let store = TestStore(
             initialState: ProductListDomain.State(),
             reducer: ProductListDomain.reducer,
@@ -48,10 +48,10 @@ class ProductListDomainTest: XCTestCase {
                 uuid: { UUID.newUUIDForTest }
             )
         )
-        
+
         let productId1 = UUID(uuidString: "00000000-0000-0000-0000-000000000000")!
         let productId2 = UUID(uuidString: "00000000-0000-0000-0000-000000000001")!
-        
+
         let identifiedArray = IdentifiedArrayOf(
             uniqueElements: [
                 ProductDomain.State(
@@ -61,20 +61,20 @@ class ProductListDomainTest: XCTestCase {
                 ProductDomain.State(
                     id: productId2,
                     product: products[1]
-                ),
+                )
             ]
         )
-        
+
         await store.send(.fetchProducts) {
             $0.dataLoadingStatus = .loading
         }
-        
+
         await store.receive(.fetchProductsResponse(.success(products))) {
             $0.productListState = identifiedArray
             $0.dataLoadingStatus = .success
         }
     }
-    
+
     func testFetchProductsFailure() async {
         let error = APIClient.Failure()
         let store = TestStore(
@@ -88,17 +88,17 @@ class ProductListDomainTest: XCTestCase {
                 uuid: { UUID.newUUIDForTest }
             )
         )
-        
+
         await store.send(.fetchProducts) {
             $0.dataLoadingStatus = .loading
         }
-        
+
         await store.receive(.fetchProductsResponse(.failure(error))) {
             $0.productListState = []
             $0.dataLoadingStatus = .error
         }
     }
-    
+
     func testResetProductsToZeroAcferPayingOrder() async {
         let products: [Product] = [
             .init(
@@ -116,12 +116,12 @@ class ProductListDomainTest: XCTestCase {
                 description: "Hi Dad!",
                 category: "Category2",
                 imageString: "image2"
-            ),
+            )
         ]
-        
+
         let id1 = UUID(uuidString: "00000000-0000-0000-0000-000000000000")!
         let id2 = UUID(uuidString: "00000000-0000-0000-0000-000000000001")!
-        
+
         let identifiedProducts = IdentifiedArrayOf(
             uniqueElements: [
                 ProductDomain.State(
@@ -131,10 +131,10 @@ class ProductListDomainTest: XCTestCase {
                 ProductDomain.State(
                     id: id2,
                     product: products[1]
-                ),
+                )
             ]
         )
-        
+
         let store = TestStore(
             initialState: ProductListDomain.State(
                 productListState: identifiedProducts
@@ -148,7 +148,7 @@ class ProductListDomainTest: XCTestCase {
                 uuid: { UUID.newUUIDForTest }
             )
         )
-        
+
         await store.send(
             .product(
                 id: id1,
@@ -157,7 +157,7 @@ class ProductListDomainTest: XCTestCase {
         ) {
             $0.productListState[id: id1]?.addToCartState.count = 1
         }
-        
+
         await store.send(
             .product(
                 id: id1,
@@ -166,7 +166,7 @@ class ProductListDomainTest: XCTestCase {
         ) {
             $0.productListState[id: id1]?.addToCartState.count = 2
         }
-        
+
         let expectedCartState = CartListDomain.State(
             cartItems: IdentifiedArrayOf(
                 uniqueElements: [
@@ -180,22 +180,22 @@ class ProductListDomainTest: XCTestCase {
                 ]
             )
         )
-        
+
         await store.send(.setCartView(isPresented: true)) {
             $0.shouldOpenCart = true
             $0.cartState = expectedCartState
         }
-        
+
         await store.send(.cart(.dismissSuccessAlert)) {
             $0.productListState[id: id1]?.addToCartState.count = 0
         }
-        
+
         await store.receive(.closeCart) {
             $0.shouldOpenCart = false
             $0.cartState = nil
         }
     }
-    
+
     func testItemRemovedFromCart() async {
         let products: [Product] = [
             .init(
@@ -213,13 +213,13 @@ class ProductListDomainTest: XCTestCase {
                 description: "Hi Dad!",
                 category: "Category2",
                 imageString: "image2"
-            ),
+            )
         ]
-        
+
         let id1 = UUID(uuidString: "00000000-0000-0000-0000-000000000000")!
         let id2 = UUID(uuidString: "00000000-0000-0000-0000-000000000001")!
         let numberOfItems = 2
-        
+
         let identifiedProducts = IdentifiedArrayOf(
             uniqueElements: [
                 ProductDomain.State(
@@ -230,10 +230,10 @@ class ProductListDomainTest: XCTestCase {
                 ProductDomain.State(
                     id: id2,
                     product: products[1]
-                ),
+                )
             ]
         )
-        
+
         let store = TestStore(
             initialState: ProductListDomain.State(
                 productListState: identifiedProducts
@@ -247,7 +247,7 @@ class ProductListDomainTest: XCTestCase {
                 uuid: { UUID.newUUIDForTest }
             )
         )
-        
+
         let expectedCartState = CartListDomain.State(
             cartItems: IdentifiedArrayOf(
                 uniqueElements: [
@@ -261,7 +261,7 @@ class ProductListDomainTest: XCTestCase {
                 ]
             )
         )
-        
+
         await store.send(.setCartView(isPresented: true)) {
             $0.shouldOpenCart = true
             $0.cartState = expectedCartState
@@ -288,11 +288,10 @@ class ProductListDomainTest: XCTestCase {
     }
 }
 
-
 extension UUID {
     // uuIdTestCounter needs to be set to 0 on setUp() method
     static var uuIdTestCounter: UInt = 0
-    
+
     static var newUUIDForTest: UUID {
         defer {
             uuIdTestCounter += 1

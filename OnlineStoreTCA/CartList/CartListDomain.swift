@@ -17,21 +17,21 @@ struct CartListDomain {
         var errorAlert: AlertState<CartListDomain.Action>?
         var successAlert: AlertState<CartListDomain.Action>?
         var isPayButtonHidden = false
-        
+
         var totalPriceString: String {
             let roundedValue = round(totalPrice * 100) / 100.0
             return "$\(roundedValue)"
         }
-        
+
         init(cartItems: IdentifiedArrayOf<CartItemDomain.State>) {
             self.cartItems = cartItems
         }
-        
+
         var isRequestInProcess: Bool {
             dataLoadingStatus == .loading
         }
     }
-    
+
     enum Action: Equatable {
         case didPressCloseButton
         case didReceivePurchaseResponse(TaskResult<String>)
@@ -44,11 +44,11 @@ struct CartListDomain {
         case deleteCartItem(id: CartItemDomain.State.ID)
         case cartItem(id: CartItemDomain.State.ID, action: CartItemDomain.Action)
     }
-    
+
     struct Environment {
         var sendOrder: ([CartItem]) async throws -> String
     }
-    
+
     static let reducer = Reducer<
         State, Action, Environment
     >.combine(
@@ -118,7 +118,7 @@ struct CartListDomain {
                         TaskResult { try await environment.sendOrder(items) }
                     )
                 }
-            case .cartItem(let id,let action):
+            case .cartItem(let id, let action):
                 switch action {
                 case .deleteCartItem:
                     return .task {
@@ -131,7 +131,7 @@ struct CartListDomain {
             }
         }
     )
-    
+
     private static func verifyPayButtonVisibility(
         state: inout State
     ) -> Effect<Action, Never> {

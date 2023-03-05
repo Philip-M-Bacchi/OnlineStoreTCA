@@ -16,7 +16,7 @@ class CartListDomainTest: XCTestCase {
         let cartItemId1 = UUID(uuidString: "00000000-0000-0000-0000-000000000000")!
         let cartItemId2 = UUID(uuidString: "00000000-0000-0000-0000-000000000001")!
         let itemQuantity = 2
-        
+
         let cartItems: IdentifiedArrayOf<CartItemDomain.State> = [
             .init(
                 id: cartItemId1,
@@ -31,9 +31,9 @@ class CartListDomainTest: XCTestCase {
                     product: Product.sample[1],
                     quantity: itemQuantity
                 )
-            ),
+            )
         ]
-        
+
         let store = TestStore(
             initialState: CartListDomain.State(cartItems: cartItems),
             reducer: CartListDomain.reducer,
@@ -41,7 +41,7 @@ class CartListDomainTest: XCTestCase {
                 sendOrder: { _ in fatalError("unimplemented") }
             )
         )
-        
+
         await store.send(.deleteCartItem(id: cartItemId1)) {
             $0.cartItems = [
                 .init(
@@ -53,18 +53,18 @@ class CartListDomainTest: XCTestCase {
                 )
             ]
         }
-        
+
         let expectedPrice = Product.sample[1].price * Double(itemQuantity)
         await store.receive(.getTotalPrice) {
             $0.totalPrice = expectedPrice
         }
     }
-    
+
     func testRemoveAllItemsFromCart() async {
         let cartItemId1 = UUID(uuidString: "00000000-0000-0000-0000-000000000000")!
         let cartItemId2 = UUID(uuidString: "00000000-0000-0000-0000-000000000001")!
         let itemQuantity = 2
-        
+
         let cartItems: IdentifiedArrayOf<CartItemDomain.State> = [
             .init(
                 id: cartItemId1,
@@ -79,9 +79,9 @@ class CartListDomainTest: XCTestCase {
                     product: Product.sample[1],
                     quantity: itemQuantity
                 )
-            ),
+            )
         ]
-        
+
         let store = TestStore(
             initialState: CartListDomain.State(cartItems: cartItems),
             reducer: CartListDomain.reducer,
@@ -89,7 +89,7 @@ class CartListDomainTest: XCTestCase {
                 sendOrder: { _ in fatalError("unimplemented") }
             )
         )
-        
+
         await store.send(.deleteCartItem(id: cartItemId1)) {
             $0.cartItems = [
                 .init(
@@ -101,28 +101,28 @@ class CartListDomainTest: XCTestCase {
                 )
             ]
         }
-        
+
         let expectedPrice = Product.sample[1].price * Double(itemQuantity)
         await store.receive(.getTotalPrice) {
             $0.totalPrice = expectedPrice
         }
-        
+
         await store.send(.deleteCartItem(id: cartItemId2)) {
             $0.cartItems = []
         }
-        
+
         await store.receive(.getTotalPrice) {
             $0.totalPrice = 0
             $0.isPayButtonHidden = true
         }
-        
+
     }
-    
+
     func testSendOrderSuccessfully() async {
         let cartItemId1 = UUID(uuidString: "00000000-0000-0000-0000-000000000000")!
         let cartItemId2 = UUID(uuidString: "00000000-0000-0000-0000-000000000001")!
         let itemQuantity = 2
-        
+
         let cartItems: IdentifiedArrayOf<CartItemDomain.State> = [
             .init(
                 id: cartItemId1,
@@ -137,9 +137,9 @@ class CartListDomainTest: XCTestCase {
                     product: Product.sample[1],
                     quantity: itemQuantity
                 )
-            ),
+            )
         ]
-        
+
         let store = TestStore(
             initialState: CartListDomain.State(cartItems: cartItems),
             reducer: CartListDomain.reducer,
@@ -147,12 +147,11 @@ class CartListDomainTest: XCTestCase {
                 sendOrder: { _ in "Success" }
             )
         )
-        
+
         await store.send(.didConfirmPurchase) {
             $0.dataLoadingStatus = .loading
         }
-        
-        
+
         await store.receive(.didReceivePurchaseResponse(.success("Success"))) {
             $0.dataLoadingStatus = .success
             $0.successAlert = AlertState(
@@ -164,12 +163,12 @@ class CartListDomainTest: XCTestCase {
             )
         }
     }
-    
+
     func testSendOrderWithError() async {
         let cartItemId1 = UUID(uuidString: "00000000-0000-0000-0000-000000000000")!
         let cartItemId2 = UUID(uuidString: "00000000-0000-0000-0000-000000000001")!
         let itemQuantity = 2
-        
+
         let cartItems: IdentifiedArrayOf<CartItemDomain.State> = [
             .init(
                 id: cartItemId1,
@@ -184,9 +183,9 @@ class CartListDomainTest: XCTestCase {
                     product: Product.sample[1],
                     quantity: itemQuantity
                 )
-            ),
+            )
         ]
-        
+
         let store = TestStore(
             initialState: CartListDomain.State(cartItems: cartItems),
             reducer: CartListDomain.reducer,
@@ -194,12 +193,11 @@ class CartListDomainTest: XCTestCase {
                 sendOrder: { _ in throw APIClient.Failure() }
             )
         )
-        
+
         await store.send(.didConfirmPurchase) {
             $0.dataLoadingStatus = .loading
         }
-        
-        
+
         await store.receive(.didReceivePurchaseResponse(.failure(APIClient.Failure()))) {
             $0.dataLoadingStatus = .error
             $0.errorAlert = AlertState(

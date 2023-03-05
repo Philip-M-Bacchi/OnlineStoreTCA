@@ -14,24 +14,24 @@ struct RootDomain {
         var productListState = ProductListDomain.State()
         var profileState = ProfileDomain.State()
     }
-    
+
     enum Tab {
         case products
         case profile
     }
-    
+
     enum Action: Equatable {
         case tabSelected(Tab)
         case productList(ProductListDomain.Action)
         case profile(ProfileDomain.Action)
     }
-    
+
     struct Environment {
         var fetchProducts: @Sendable () async throws -> [Product]
-        var sendOrder:  @Sendable ([CartItem]) async throws -> String
-        var fetchUserProfile:  @Sendable () async throws -> UserProfile
+        var sendOrder: @Sendable ([CartItem]) async throws -> String
+        var fetchUserProfile: @Sendable () async throws -> UserProfile
         var uuid: @Sendable () -> UUID
-        
+
         static let live = Self(
             fetchProducts: APIClient.live.fetchProducts,
             sendOrder: APIClient.live.sendOrder,
@@ -39,7 +39,7 @@ struct RootDomain {
             uuid: { UUID() }
         )
     }
-    
+
     static let reducer = Reducer<
         State, Action, Environment
     >.combine(
@@ -61,11 +61,11 @@ struct RootDomain {
                 action: /RootDomain.Action.profile,
                 environment: {
                     ProfileDomain.Environment(
-                        fetchUserProfile:  $0.fetchUserProfile
+                        fetchUserProfile: $0.fetchUserProfile
                     )
                 }
             ),
-        .init { state, action, environment in
+        .init { state, action, _ in
             switch action {
             case .productList:
                 return .none

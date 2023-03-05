@@ -9,8 +9,8 @@ import SwiftUI
 import ComposableArchitecture
 
 struct CartCell: View {
-    let store: Store<CartItemDomain.State,CartItemDomain.Action>
-    
+    let store: Store<CartItemDomain.State, CartItemDomain.Action>
+
     var body: some View {
         WithViewStore(self.store) { viewStore in
             VStack {
@@ -38,7 +38,7 @@ struct CartCell: View {
                                 .fontWeight(.bold)
                         }
                     }
-                    
+
                 }
                 ZStack {
                     Group {

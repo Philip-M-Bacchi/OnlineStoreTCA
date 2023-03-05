@@ -14,16 +14,16 @@ struct ProductListDomain {
         var shouldOpenCart = false
         var cartState: CartListDomain.State?
         var productListState: IdentifiedArrayOf<ProductDomain.State> = []
-        
+
         var shouldShowError: Bool {
             dataLoadingStatus == .error
         }
-        
+
         var isLoading: Bool {
             dataLoadingStatus == .loading
         }
     }
-    
+
     enum Action: Equatable {
         case fetchProducts
         case fetchProductsResponse(TaskResult<[Product]>)
@@ -33,13 +33,13 @@ struct ProductListDomain {
         case resetProduct(product: Product)
         case closeCart
     }
-    
+
     struct Environment {
-        var fetchProducts:  @Sendable () async throws -> [Product]
-        var sendOrder:  @Sendable ([CartItem]) async throws -> String
+        var fetchProducts: @Sendable () async throws -> [Product]
+        var sendOrder: @Sendable ([CartItem]) async throws -> String
         var uuid: @Sendable () -> UUID
     }
-    
+
     static let reducer = Reducer<
         State, Action, Environment
     >.combine(
@@ -65,7 +65,7 @@ struct ProductListDomain {
                 if state.dataLoadingStatus == .success || state.dataLoadingStatus == .loading {
                     return .none
                 }
-                
+
                 state.dataLoadingStatus = .loading
                 return .task {
                     await .fetchProductsResponse(
@@ -94,7 +94,7 @@ struct ProductListDomain {
                     return closeCart(state: &state)
                 case .dismissSuccessAlert:
                     resetProductsToZero(state: &state)
-                    
+
                     return .task {
                         .closeCart
                     }
@@ -111,13 +111,13 @@ struct ProductListDomain {
             case .closeCart:
                 return closeCart(state: &state)
             case .resetProduct(let product):
-                
+
                 guard let index = state.productListState.firstIndex(
                     where: { $0.product.id == product.id }
                 )
                 else { return .none }
                 let productStateId = state.productListState[index].id
-                
+
                 state.productListState[id: productStateId]?.addToCartState.count = 0
                 return .none
             case .setCartView(let isPresented):
@@ -147,21 +147,21 @@ struct ProductListDomain {
             }
         }
     )
-    
+
     private static func closeCart(
         state: inout State
     ) -> Effect<Action, Never> {
         state.shouldOpenCart = false
         state.cartState = nil
-        
+
         return .none
     }
-    
+
     private static func resetProductsToZero(
         state: inout State
     ) {
         for id in state.productListState.map(\.id)
-        where state.productListState[id: id]?.count != 0  {
+        where state.productListState[id: id]?.count != 0 {
             state.productListState[id: id]?.addToCartState.count = 0
         }
     }

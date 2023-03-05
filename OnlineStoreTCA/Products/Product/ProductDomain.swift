@@ -13,18 +13,18 @@ struct ProductDomain {
         let id: UUID
         let product: Product
         var addToCartState = AddToCartDomain.State()
-        
+
         var count: Int {
             addToCartState.count
         }
     }
-    
+
     enum Action: Equatable {
         case addToCart(AddToCartDomain.Action)
     }
-    
+
     struct Environment {}
-    
+
     static let reducer = Reducer<
         State, Action, Environment
     >.combine(
@@ -36,7 +36,7 @@ struct ProductDomain {
                     AddToCartDomain.Environment()
                 }
             ),
-        .init { state, action, environment in
+        .init { state, action, _ in
             switch action {
             case .addToCart(.didTapPlusButton):
                 return .none
