@@ -300,10 +300,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B5A5CFBF289C257B00AC3E5E /* Build configuration list for PBXNativeTarget "OnlineStoreTCA" */;
 			buildPhases = (
+				026866C529B5012900BC2FD0 /* Swiftlint */,
 				B5A5CFAD289C257900AC3E5E /* Sources */,
 				B5A5CFAE289C257900AC3E5E /* Frameworks */,
 				B5A5CFAF289C257900AC3E5E /* Resources */,
-				026866C529B5012900BC2FD0 /* Swiftlint */,
 			);
 			buildRules = (
 			);
@@ -384,15 +384,16 @@
 			files = (
 			);
 			inputFileListPaths = (
+				"$(SRCROOT)/build/build_phases/SwiftlintBuildPhase_swiftlint.xcfilelist",
 			);
 			inputPaths = (
-				"$(SRCROOT)/*",
 			);
 			name = Swiftlint;
 			outputFileListPaths = (
+				"",
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/*",
+				"$(SRCROOT)/build/build_phases/SwiftlintBuildPhase_swiftlint_static_output",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

@@ -99,6 +99,7 @@ class ProductListDomainTest: XCTestCase {
         }
     }
 
+    // swiftlint:disable:next function_body_length
     func testResetProductsToZeroAcferPayingOrder() async {
         let products: [Product] = [
             .init(
@@ -196,6 +197,7 @@ class ProductListDomainTest: XCTestCase {
         }
     }
 
+    // swiftlint:disable:next function_body_length
     func testItemRemovedFromCart() async {
         let products: [Product] = [
             .init(
